@@ -7,6 +7,12 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Link } from 'expo-router';
 import DisplayAnImage from '@/components/Image';
+import App from '@/components/ui/lista';
+import App1 from '@/components/ui/opacity';
+import ViewBoxesWithColorAndText from '@/components/view';
+import App2 from '@/components/swith';
+import App3 from '@/components/scrollview';
+
 
 export default function HomeScreen() {
   return (
@@ -14,8 +20,9 @@ export default function HomeScreen() {
               App de Saúde
 
             <DisplayAnImage/>
-
-
+            <App3/>
+            
+            <App2/> 
             </View>
 
   );
