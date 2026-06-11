@@ -1,102 +1,180 @@
-import React, {useState} from 'react';
+import React from "react";
 import {
-  FlatList,
-  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
-} from 'react-native';
-import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
-import App2 from '../swith';
+  View,
+} from "react-native";
 
-type ItemData = {
-  id: string;
-  title: string;
-};
+import Opacity from "../ui/opacity";
 
-const DATA: ItemData[] = [
+const habitos = [
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Hidratação',
+    id: "hidratacao",
+    emoji: "💧",
+    titulo: "Hidratação",
+    descricao:
+      "Beba cerca de 2 litros de água por dia. A hidratação melhora o funcionamento do organismo.",
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Comer',
+    id: "alimentacao",
+    emoji: "🥗",
+    titulo: "Alimentação",
+    descricao:
+      "Consuma frutas, verduras e alimentos naturais.",
   },
   {
-    id: '58694a0f-3d1-413f-bd96-145571e29d72',
-    title: 'Dor'
-    ,
+    id: "sono",
+    emoji: "😴",
+    titulo: "Sono",
+    descricao:
+      "Procure dormir entre 7 e 9 horas por noite.",
   },
   {
-    id: '58694a0f-3da-471f-bd96-145571e29d72',
-    title: 'Doir'
-    ,
-  },
-  {
-    id: '58694a0f-da1-471f-bd96-145571e29d72',
-    title: 'Dorr'
-    ,
+    id: "exercicios",
+    emoji: "🏃",
+    titulo: "Exercícios",
+    descricao:
+      "Pratique atividades físicas regularmente.",
   },
 ];
 
-type ItemProps = {
-  item: ItemData;
-  onPress: () => void;
-  backgroundColor: string;
-  textColor: string;
-};
-
-const Item = ({item, onPress, backgroundColor, textColor}: ItemProps) => (
-  <TouchableOpacity onPress={onPress} style={[styles.item, {backgroundColor}]}>
-    <Text style={[styles.title, {color: textColor}]}>{item.title}</Text>
-  </TouchableOpacity> 
-);
-
-const App = () => {
-  const [selectedId, setSelectedId] = useState<string>();
-
-  const renderItem = ({item}: {item: ItemData}) => {
-    const backgroundColor = item.id === selectedId ? '#87CEEB' : '#87CEEB';
-    const color = item.id === selectedId ? '#FFFFFF' : 'black';
-
-    return (
-      <Item
-        item={item}
-        onPress={() => setSelectedId(item.id)}
-        backgroundColor={backgroundColor}
-        textColor={color}
-      />
-    );
-  };
+export default function Lista({
+  selecionado,
+  setSelecionado,
+}: {
+  selecionado: string | null;
+  setSelecionado: React.Dispatch<
+    React.SetStateAction<string | null>
+  >;
+}) {
+  const habitoSelecionado = habitos.find(
+    (item) => item.id === selecionado
+  );
 
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
-        <FlatList
-          data={DATA}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-          extraData={selectedId}
-        />
-      </SafeAreaView>
-    </SafeAreaProvider>
+    <>
+      <Text style={styles.sectionTitle}>
+        Escolha um hábito saudável
+      </Text>
+
+      <View style={styles.grid}>
+        {habitos.map((item) => (
+          <Opacity
+            key={item.id}
+            emoji={item.emoji}
+            titulo={item.titulo}
+            onPress={() =>
+              setSelecionado(item.id)
+            }
+          />
+        ))}
+      </View>
+
+      <View style={styles.infoCard}>
+        <Text style={styles.infoTitle}>
+          Informações do hábito
+        </Text>
+
+        {habitoSelecionado ? (
+          <>
+            <Text style={styles.infoEmoji}>
+              {habitoSelecionado.emoji}
+            </Text>
+
+            <Text style={styles.infoHabit}>
+              {habitoSelecionado.titulo}
+            </Text>
+
+            <Text style={styles.infoText}>
+              {habitoSelecionado.descricao}
+            </Text>
+
+            <TouchableOpacity
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>
+                Marcar como realizado
+              </Text>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <Text style={styles.placeholder}>
+            Selecione um hábito acima para
+            visualizar as informações.
+          </Text>
+        )}
+      </View>
+    </>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: "600",
+    marginHorizontal: 16,
+    marginBottom: 16,
+    color: "#2D3748",
   },
-  item: {
+
+  grid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+  },
+
+  infoCard: {
+    margin: 16,
+    backgroundColor: "#FFF",
+    borderRadius: 20,
     padding: 20,
-    marginVertical:15,
-    marginHorizontal: 1,
+    elevation: 2,
   },
-  title: {
-    fontSize: 32,
+
+  infoTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 15,
+  },
+
+  infoEmoji: {
+    fontSize: 50,
+    textAlign: "center",
+  },
+
+  infoHabit: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 10,
+  },
+
+  infoText: {
+    fontSize: 16,
+    textAlign: "center",
+    marginTop: 15,
+    lineHeight: 24,
+    color: "#555",
+  },
+
+  placeholder: {
+    textAlign: "center",
+    color: "#777",
+    fontSize: 16,
+  },
+
+  button: {
+    backgroundColor: "#4A9FEA",
+    padding: 15,
+    borderRadius: 12,
+    marginTop: 20,
+  },
+
+  buttonText: {
+    color: "#FFF",
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });
-
-export default App;

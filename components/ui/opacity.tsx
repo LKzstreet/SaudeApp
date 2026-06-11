@@ -1,40 +1,55 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+import React from "react";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 
-const App1 = () => {
-  const [count, setCount] = useState(0);
-  const onPress = () => setCount(prevCount => prevCount + 1);
-
-  return (
-    <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.countContainer}>
-          <Text>Count: {count}</Text>
-        </View>
-        <TouchableOpacity style={styles.button} onPress={onPress}>
-          <Text>Pressione aqui</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
-    </SafeAreaProvider>
-  );
+type Props = {
+  emoji: string;
+  titulo: string;
+  onPress: () => void;
 };
 
+export default function Opacity({
+  emoji,
+  titulo,
+  onPress,
+}: Props) {
+  return (
+    <TouchableOpacity
+      style={styles.card}
+      onPress={onPress}
+    >
+      <Text style={styles.icon}>
+        {emoji}
+      </Text>
+
+      <Text style={styles.title}>
+        {titulo}
+      </Text>
+    </TouchableOpacity>
+  );
+}
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 10,
+  card: {
+    width: "48%",
+    backgroundColor: "#FFF",
+    borderRadius: 20,
+    padding: 20,
+    alignItems: "center",
+    marginBottom: 16,
+    elevation: 2,
   },
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    padding: 10,
+
+  icon: {
+    fontSize: 40,
+    marginBottom: 10,
   },
-  countContainer: {
-    alignItems: 'center',
-    padding: 10,
+
+  title: {
+    fontSize: 18,
+    fontWeight: "600",
   },
 });
-
-export default App1;
