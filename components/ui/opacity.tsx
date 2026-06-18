@@ -34,7 +34,7 @@ export default function Opacity({
 
 const styles = StyleSheet.create({
   card: {
-    width: "48%",
+    width: "100%",
     backgroundColor: "#FFF",
     borderRadius: 20,
     padding: 20,

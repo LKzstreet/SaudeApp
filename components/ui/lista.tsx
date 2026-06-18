@@ -8,6 +8,7 @@ import {
 
 import Opacity from "../ui/opacity";
 
+
 const habitos = [
   {
     id: "hidratacao",
@@ -21,21 +22,56 @@ const habitos = [
     emoji: "🥗",
     titulo: "Alimentação",
     descricao:
-      "Consuma frutas, verduras e alimentos naturais.",
+      "Consuma frutas, verduras, legumes e alimentos naturais diariamente.",
   },
   {
     id: "sono",
     emoji: "😴",
     titulo: "Sono",
     descricao:
-      "Procure dormir entre 7 e 9 horas por noite.",
+      "Procure dormir entre 7 e 9 horas por noite para recuperar as energias.",
   },
   {
     id: "exercicios",
     emoji: "🏃",
     titulo: "Exercícios",
     descricao:
-      "Pratique atividades físicas regularmente.",
+      "Pratique atividades físicas regularmente para fortalecer o corpo e a mente.",
+  },
+  {
+    id: "saude_mental",
+    emoji: "🧠",
+    titulo: "Saúde Mental",
+    descricao:
+      "Reserve momentos para relaxar, reduzir o estresse e cuidar das emoções.",
+  },
+  {
+    id: "tempo_tela",
+    emoji: "📱",
+    titulo: "Tempo de Tela",
+    descricao:
+      "Evite excesso de telas e faça pausas para descansar os olhos.",
+  },
+  {
+    id: "alongamento",
+    emoji: "🤸",
+    titulo: "Alongamento",
+    descricao:
+      "Alongue-se diariamente para melhorar a flexibilidade e evitar dores.",
+  },
+  {
+    id: "sol",
+    emoji: "☀️",
+    titulo: "Exposição ao Sol",
+    descricao:
+      "Tome sol com moderação para ajudar na produção de vitamina D.",
+  },
+  {
+    id: "leitura",
+    emoji: "📚",
+    titulo: "Leitura",
+    descricao:
+      "Leia alguns minutos por dia para estimular a concentração e o aprendizado.",
   },
 ];
 
@@ -51,6 +87,8 @@ export default function Lista({
   const habitoSelecionado = habitos.find(
     (item) => item.id === selecionado
   );
+  const [realizados, setRealizados] =
+  React.useState<string[]>([]);
 
   return (
     <>
@@ -59,51 +97,59 @@ export default function Lista({
       </Text>
 
       <View style={styles.grid}>
-        {habitos.map((item) => (
-          <Opacity
-            key={item.id}
-            emoji={item.emoji}
-            titulo={item.titulo}
-            onPress={() =>
-              setSelecionado(item.id)
-            }
-          />
-        ))}
-      </View>
+  {habitos.map((item) => (
+    <View key={item.id}>
+      <Opacity
+        emoji={item.emoji}
+        titulo={item.titulo}
+        onPress={() =>
+          setSelecionado(
+            selecionado === item.id
+              ? null
+              : item.id
+              
+          )
+        }
+      />
+      
 
-      <View style={styles.infoCard}>
-        <Text style={styles.infoTitle}>
-          Informações do hábito
-        </Text>
-
-        {habitoSelecionado ? (
-          <>
-            <Text style={styles.infoEmoji}>
-              {habitoSelecionado.emoji}
-            </Text>
-
-            <Text style={styles.infoHabit}>
-              {habitoSelecionado.titulo}
-            </Text>
-
-            <Text style={styles.infoText}>
-              {habitoSelecionado.descricao}
-            </Text>
-
-            <TouchableOpacity
-              style={styles.button}
-            >
-              <Text style={styles.buttonText}>
-                Marcar como realizado
-              </Text>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <Text style={styles.placeholder}>
-            Selecione um hábito acima para
-            visualizar as informações.
+      {selecionado === item.id && (
+        <View style={styles.infoCard}>
+          <Text style={styles.infoText}>
+            {item.descricao}
           </Text>
-        )}
+          
+          <TouchableOpacity
+  style={[
+    styles.button,
+    realizados.includes(item.id) && {
+      backgroundColor: "#22C55E",
+    },
+  ]}
+  onPress={() => {
+    if (
+      !realizados.includes(item.id)
+    ) {
+      setRealizados([
+        ...realizados,
+        item.id,
+      ]);
+    }
+  }}
+>
+<Text style={styles.buttonText}>
+  {realizados.includes(item.id)
+    ? "✅ Realizado"
+    : "Marcar como realizado"}
+</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </View>
+  ))}
+
+
+ 
       </View>
     </>
   );
@@ -119,10 +165,8 @@ const styles = StyleSheet.create({
   },
 
   grid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
     paddingHorizontal: 16,
+    flexDirection: "column",
   },
 
   infoCard: {
