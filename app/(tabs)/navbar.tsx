@@ -1,9 +1,9 @@
 import React from "react";
 import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
   View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
 } from "react-native";
 
 export default function Navbar() {

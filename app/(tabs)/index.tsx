@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native";
 import ScrollViewComponent from "../../components/scrollview";
 import Lista from "../../components/ui/lista";
 
+
 export default function HomeScreen() {
   const [selecionado, setSelecionado] = useState<string | null>(null);
 
