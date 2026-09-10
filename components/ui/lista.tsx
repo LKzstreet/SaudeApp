@@ -8,7 +8,6 @@ import {
 
 import Opacity from "../ui/opacity";
 
-
 const habitos = [
   {
     id: "hidratacao",
@@ -87,8 +86,9 @@ export default function Lista({
   const habitoSelecionado = habitos.find(
     (item) => item.id === selecionado
   );
+
   const [realizados, setRealizados] =
-  React.useState<string[]>([]);
+    React.useState<string[]>([]);
 
   return (
     <>
@@ -97,59 +97,52 @@ export default function Lista({
       </Text>
 
       <View style={styles.grid}>
-  {habitos.map((item) => (
-    <View key={item.id}>
-      <Opacity
-        emoji={item.emoji}
-        titulo={item.titulo}
-        onPress={() =>
-          setSelecionado(
-            selecionado === item.id
-              ? null
-              : item.id
-              
-          )
-        }
-      />
-      
+        {habitos.map((item) => (
+          <View key={item.id}>
+            <Opacity
+              emoji={item.emoji}
+              titulo={item.titulo}
+              onPress={() =>
+                setSelecionado(
+                  selecionado === item.id
+                    ? null
+                    : item.id
+                )
+              }
+            />
 
-      {selecionado === item.id && (
-        <View style={styles.infoCard}>
-          <Text style={styles.infoText}>
-            {item.descricao}
-          </Text>
-          
-          <TouchableOpacity
-  style={[
-    styles.button,
-    realizados.includes(item.id) && {
-      backgroundColor: "#22C55E",
-    },
-  ]}
-  onPress={() => {
-    if (
-      !realizados.includes(item.id)
-    ) {
-      setRealizados([
-        ...realizados,
-        item.id,
-      ]);
-    }
-  }}
->
-<Text style={styles.buttonText}>
-  {realizados.includes(item.id)
-    ? "✅ Realizado"
-    : "Marcar como realizado"}
-</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </View>
-  ))}
+            {selecionado === item.id && (
+              <View style={styles.infoCard}>
+                <Text style={styles.infoText}>
+                  {item.descricao}
+                </Text>
 
-
- 
+                <TouchableOpacity
+                  style={[
+                    styles.button,
+                    realizados.includes(item.id) && {
+                      backgroundColor: "#22C55E",
+                    },
+                  ]}
+                  onPress={() => {
+                    if (!realizados.includes(item.id)) {
+                      setRealizados([
+                        ...realizados,
+                        item.id,
+                      ]);
+                    }
+                  }}
+                >
+                  <Text style={styles.buttonText}>
+                    {realizados.includes(item.id)
+                      ? "✅ Realizado"
+                      : "Marcar como realizado"}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+        ))}
       </View>
     </>
   );
