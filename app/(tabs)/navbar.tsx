@@ -1,78 +1,45 @@
-import React from "react";
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-} from "react-native";
-
-export default function Navbar() {
+import { HapticTab } from '@/components/haptic-tab';
+import { IconSymbol } from '@/components/ui/icon-symbol';
+import { Colors } from '@/constants/theme';
+import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Tabs } from 'expo-router';
+import React from 'react';
+export default function TabLayout() {
+  const colorScheme = useColorScheme();
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.item}>
-        <Text style={styles.icon}>🏠</Text>
-        <Text style={styles.label}>Início</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.item}>
-        <Text style={styles.icon}>📊</Text>
-        <Text style={styles.label}>Progresso</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.item}>
-        <Text style={styles.icon}>❤️</Text>
-        <Text style={styles.label}>Hábitos</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.item}>
-        <Text style={styles.icon}>⚙️</Text>
-        <Text style={styles.label}>Configurações</Text>
-      </TouchableOpacity>
-    </View>
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        headerShown: false,
+        tabBarButton: HapticTab,
+      }}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: 'Inicial',
+          tabBarIcon: ({ color }) => (
+            <IconSymbol
+              size={28}
+              name="house.fill"
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="explore"
+        options={{
+          title: 'Mais',
+          tabBarIcon: ({ color }) => (
+            <IconSymbol
+              size={28}
+              name="paperplane.fill"
+              color={color}
+            />
+          ),
+        }}
+      />
+    </Tabs>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-
-    height: 70,
-    backgroundColor: "#FFFFFF",
-
-    borderTopWidth: 1,
-    borderTopColor: "#E5E7EB",
-
-    elevation: 10,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: -2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-  },
-
-  item: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  icon: {
-    fontSize: 24,
-    marginBottom: 2,
-  },
-
-  label: {
-    fontSize: 12,
-    color: "#555",
-    fontWeight: "500",
-  },
-});

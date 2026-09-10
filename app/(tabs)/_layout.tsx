@@ -44,62 +44,6 @@ export default function TabLayout() {
           ),
         }}
       />
-
-      <Tabs.Screen
-        name="primeiros-cuidados"
-        options={{
-          href: null,
-        }}
-      />
-
-      <Tabs.Screen
-        name="alimentacao"
-        options={{
-          href: null,
-        }}
-      />
-
-      <Tabs.Screen
-        name="higiene"
-        options={{
-          href: null,
-        }}
-      />
-
-      <Tabs.Screen
-        name="saude-bucal"
-        options={{
-          href: null,
-        }}
-      />
-
-      <Tabs.Screen
-        name="ajuda"
-        options={{
-          href: null,
-        }}
-      />
-
-      <Tabs.Screen
-        name="medicamentos"
-        options={{
-          href: null,
-        }}
-      />
-
-      <Tabs.Screen
-        name="prevencao"
-        options={{
-          href: null,
-        }}
-      />
-
-      <Tabs.Screen
-        name="vacinacao"
-        options={{
-          href: null,
-        }}
-      />
     </Tabs>
   );
 }
